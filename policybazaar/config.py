@@ -1,11 +1,7 @@
 import os
 from pathlib import Path
 
-if os.environ['POLICY_BAZAAR_DIR']:
-    POLICY_BAZAAR_DIR = os.environ['POLICY_BAZAAR_DIR']
-else:
-    POLICY_BAZAAR_DIR = os.path.join(str(Path.home()), '.policybazaar')
-
+POLICY_BAZAAR_DIR = os.getenv('POLICY_BAZAAR_DIR', default=os.path.join(str(Path.home()), '.policybazaar'))
 MIN_PRE_TRAINED_LEVEL = 1
 MAX_PRE_TRAINED_LEVEL = 4
 
