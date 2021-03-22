@@ -1,0 +1,54 @@
+# This workflow will install system and python dependencies, run tests and lint with a variety of Python versions
+
+name: Python package
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: [3.6, 3.7, 3.8]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Setup Mujoco
+        env:
+          MUJOCO_KEY: ${{ secrets.MUJOCO_KEY }}
+        run: |
+          sudo apt install -y  libosmesa6-dev  libglew-dev  libgl1-mesa-glx libgl1-mesa-dev libgl1-mesa-glx libglfw3
+          sudo apt install xpra xserver-xorg-dev
+          wget https://www.roboti.us/download/mujoco200_linux.zip
+          mkdir -p "/home/runner/.mujoco/mujoco200"
+          unzip -o mujoco200_linux.zip -d .
+          mv mujoco200_linux /home/runner/.mujoco/
+          cp -r /home/runner/.mujoco/mujoco200_linux/* /home/runner/.mujoco/mujoco200
+          echo  "$MUJOCO_KEY" > "/home/runner/.mujoco/mjkey.txt"
+      - name: Install pip requirements
+        run: |
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/runner/.mujoco/mujoco200/bin
+          python -m pip install --upgrade pip
+          pip install flake8
+          pip install -e .
+          pip install -e ".[test]"
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Test with pytest
+        env:
+          LD_LIBRARY_PATH: $LD_LIBRARY_PATH:/home/runner/.mujoco/mujoco200/bin
+          WANDB_API_KEY:  ${{ secrets.WANDB_API_KEY }}
+        run: |
+          pytest
