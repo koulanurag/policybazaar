@@ -53,7 +53,7 @@ Python package and dependencies could be installed using:
 ## What's New:
 
 - **22nd Mar, 2021:**
-    - initial beta-release with pre-trained policies for maze2d in d4rl.
+    - initial alpha-release with pre-trained policies for maze2d in d4rl.
     
 ## Pre-trained Policy Scores
 In the following, we report performance of various pre-trained models. These scores are reported over `20` episode runs.
