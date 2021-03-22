@@ -1,11 +1,7 @@
 import os
 from pathlib import Path
 
-if os.environ['POLICY_BAZAAR_DIR']:
-    POLICY_BAZAAR_DIR = os.environ['POLICY_BAZAAR_DIR']
-else:
-    POLICY_BAZAAR_DIR = os.path.join(str(Path.home()), '.policybazaar')
-
+POLICY_BAZAAR_DIR = os.getenv('POLICY_BAZAAR_DIR', default=os.path.join(str(Path.home()), '.policybazaar'))
 MIN_PRE_TRAINED_LEVEL = 1
 MAX_PRE_TRAINED_LEVEL = 4
 
@@ -37,7 +33,8 @@ ENV_INFO = {'d4rl:maze2d-umaze-dense-v1': {'wandb_run_id': 'koulanurag/pytorch-d
             'd4rl:maze2d-large-dense-v1': {'wandb_run_id': 'koulanurag/pytorch-drl/im68hs90',
                                            'info': {'pre_trained=4': {'score_mean': 206.5, 'score_std': 159.0},
                                                     'pre_trained=3': {'score_mean': 251.0, 'score_std': 192.7},
-                                                    'pre_trained=2': {'score_mean': 297.3, 'score_std': 230.7}}},
+                                                    'pre_trained=2': {'score_mean': 297.3, 'score_std': 230.7},
+                                                    'pre_trained=1': {'score_mean': 275.2, 'score_std': 237.4}}},
             'd4rl:maze2d-large-v1': {'wandb_run_id': 'koulanurag/pytorch-drl/kbwinqwa',
                                      'info': {'pre_trained=4': {'score_mean': 12.3, 'score_std': 9.1},
                                               'pre_trained=3': {'score_mean': 92.8, 'score_std': 164.7},

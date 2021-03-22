@@ -69,3 +69,6 @@ target/
 # IPython
 profile_default/
 ipython_config.py
+
+# Mujoco
+MUJOCO_LOG.TXT

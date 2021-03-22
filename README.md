@@ -67,7 +67,8 @@ In the following, we report performance of various pre-trained models. These sco
 |`d4rl:maze2d-umaze-v1`|243.5±35.4 |253.5±30.4 |223.9±60.2 |39.5±94.7 |
 |`d4rl:maze2d-open-dense-v0`|122.1±9.5 |120.3±9.4 |105.3±14.6 |44.3±12.7 |
 |`d4rl:maze2d-open-v0`|117.7±10.2 |120.0±15.5 |26.2±10.8 |6.7±8.1 |
-|`d4rl:maze2d-large-dense-v1`| |297.3±230.7 |251.0±192.7 |206.5±159.0 |
+|`d4rl:maze2d-large-dense-v1`|275.2±237.4 |297.3±230.7 |251.0±192.7 |206.5±159.0 |
 |`d4rl:maze2d-large-v1`|33.0±45.8 |5.3±12.7 |92.8±164.7 |12.3±9.1 |
 |`d4rl:maze2d-medium-v1`|293.4±267.5 |290.5±263.7 |281.2±256.8 |339.2±227.8 |
+
 ***

@@ -31,7 +31,7 @@ def get_policy(env_name: str, pre_trained: int = 1) -> (ActorCriticNetwork, dict
 
     # retrieve model
     run = wandb.Api().run(run_id)
-    env_root = os.path.join(POLICY_BAZAAR_DIR)
+    env_root = os.path.join(env_name, POLICY_BAZAAR_DIR)
     os.makedirs(env_root, exist_ok=True)
     model_name = '{}_interval_{}.p'.format(ENV_INFO[env_name]['model_name'],
                                            (MAX_PRE_TRAINED_LEVEL + 1) - pre_trained)

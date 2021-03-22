@@ -3,11 +3,11 @@ import pytest
 import torch
 
 import policybazaar
-from policybazaar.config import env_info, MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL
+from policybazaar.config import ENV_INFO, MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL
 
 
 @pytest.mark.parametrize('env_name,pre_trained', [(env_name, pre_trained)
-                                                  for env_name in list(env_info.keys())
+                                                  for env_name in list(ENV_INFO.keys())
                                                   for pre_trained in range(MIN_PRE_TRAINED_LEVEL,
                                                                            MAX_PRE_TRAINED_LEVEL + 1)])
 def test_wandb_ids(env_name, pre_trained):
