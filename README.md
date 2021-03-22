@@ -50,12 +50,15 @@ Python package and dependencies could be installed using:
 - Install: ```pip install -e ".[test]" ```
 - Run: ```pytest```
 
+## What's New:
 
+- **22nd Mar, 2021:**
+    - initial beta-release with pre-trained policies for maze2d in d4rl.
+    
 ## Pre-trained Policy Scores
 In the following, we report performance of various pre-trained models. These scores are reported over `20` episode runs.
 
 ### :small_blue_diamond: [d4rl:maze2d](https://github.com/rail-berkeley/d4rl/wiki/Tasks#maze2d)
-
 <p align="center">
 <img width="500" alt="maze2d-environments" src="https://github.com/rail-berkeley/offline_rl/raw/assets/assets/mazes_filmstrip.png">
 </p>
@@ -72,3 +75,4 @@ In the following, we report performance of various pre-trained models. These sco
 |`d4rl:maze2d-medium-v1`|293.4±267.5 |290.5±263.7 |281.2±256.8 |339.2±227.8 |
 
 ***
+
