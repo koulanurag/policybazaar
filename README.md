@@ -59,9 +59,7 @@ Python package and dependencies could be installed using:
 In the following, we report performance of various pre-trained models. These scores are reported over `20` episode runs.
 
 ### :small_blue_diamond: [d4rl:maze2d](https://github.com/rail-berkeley/d4rl/wiki/Tasks#maze2d)
-<p align="center">
 <img width="500" alt="maze2d-environments" src="https://github.com/rail-berkeley/offline_rl/raw/assets/assets/mazes_filmstrip.png">
-</p>
 
 | Environment Name |`pre_trained=1` (best) |`pre_trained=2`  |`pre_trained=3`  |`pre_trained=4` (worst) |
 |:------: | :------: | :------: | :------: | :------: | 
