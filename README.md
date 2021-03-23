@@ -50,7 +50,7 @@ pip install -e .
 
 ## What's New:
 
-- **23nd Mar, 2021:**
+- **23rd Mar, 2021:**
     - Initial release(alpha) with pre-trained policies for maze2d in d4rl.
     
 ## Pre-trained Policy Scores
