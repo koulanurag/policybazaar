@@ -2,7 +2,6 @@
 A collection of multi-quality  policies for continuous control tasks.
 
 [![Python package](https://github.com/koulanurag/policybazaar/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/koulanurag/policybazaar/actions/workflows/python-package.yml)
-[![Upload Python Package](https://github.com/koulanurag/policybazaar/actions/workflows/python-publish.yml/badge.svg)](https://github.com/koulanurag/policybazaar/actions/workflows/python-publish.yml)
 
 ## Installation
 It requires:
@@ -12,16 +11,15 @@ It requires:
 - [Pytorch >= 1.8.0](https://pytorch.org/)
 
 Python package and dependencies could be installed using:
-- PyPI:
-    ```bash
-    pip install policybazaar
-    ```
-- Directly from source:
-    ```bash
-    git clone https://github.com/koulanurag/policybazaar.git
-    cd policybazar
-    pip install -e .
-    ```
+```bash
+pip install git+https://github.com/koulanurag/policybazaar@master#egg=policybazaar
+```
+Or
+```bash
+git clone https://github.com/koulanurag/policybazaar.git
+cd policybazar
+pip install -e .
+```
 
 ## Usage
 
@@ -52,8 +50,8 @@ Python package and dependencies could be installed using:
 
 ## What's New:
 
-- **22nd Mar, 2021:**
-    - initial alpha-release with pre-trained policies for maze2d in d4rl.
+- **23nd Mar, 2021:**
+    - Initial release(alpha) with pre-trained policies for maze2d in d4rl.
     
 ## Pre-trained Policy Scores
 In the following, we report performance of various pre-trained models. These scores are reported over `20` episode runs.
