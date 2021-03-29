@@ -54,7 +54,7 @@ pip install -e .
     - policies were hand-picked
 - **23rd Mar, 2021:**
     - Initial release(alpha1) with pre-trained policies for maze2d in d4rl. 
-    
+
 ## Pre-trained Policy Scores
 In the following, we report performance of various pre-trained models. These scores are reported over `20` episode runs.
 
