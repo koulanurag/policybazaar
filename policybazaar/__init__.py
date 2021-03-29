@@ -3,7 +3,8 @@ import os
 import torch
 import wandb
 
-from .config import ENV_INFO, POLICY_BAZAAR_DIR, MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL
+from .config import ENV_IDS, POLICY_BAZAAR_DIR, MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL, BASE_PROJECT_URL
+from .config import ENV_PERFORMANCE_STATS, CHILD_PARENT_ENVS
 from .model import ActorCriticNetwork
 
 
@@ -24,18 +25,25 @@ def get_policy(env_name: str, pre_trained: int = 1) -> (ActorCriticNetwork, dict
         'pre_trained marker should be between [{},{}] where {} indicates the best model' \
         ' and {} indicates the worst model'.format(MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL, MIN_PRE_TRAINED_LEVEL,
                                                    MAX_PRE_TRAINED_LEVEL)
-    assert env_name in ENV_INFO, '`{}` not found. It should be among following: {}'.format(env_name, ENV_INFO.keys())
+    assert env_name in ENV_IDS or env_name in CHILD_PARENT_ENVS, \
+        '`{}` not found. It should be among following: {}'.format(env_name,
+                                                                  list(ENV_IDS.keys()) + list(CHILD_PARENT_ENVS.keys()))
 
-    run_id = ENV_INFO[env_name]['wandb_run_id']
-    info = ENV_INFO[env_name]['info']['pre_trained={}'.format(pre_trained)]
+    if env_name not in ENV_IDS:
+        env_name = CHILD_PARENT_ENVS[env_name]
+    run_id = ENV_IDS[env_name]['wandb_run_id']
+    if env_name in ENV_PERFORMANCE_STATS and pre_trained in ENV_PERFORMANCE_STATS[env_name]:
+        info = ENV_PERFORMANCE_STATS[env_name][pre_trained]
+    else:
+        info = {}
 
     # retrieve model
-    run = wandb.Api().run(run_id)
-    env_root = os.path.join(env_name, POLICY_BAZAAR_DIR)
+    path = BASE_PROJECT_URL + run_id
+    run = wandb.Api().run(path)
+    env_root = os.path.join(env_name, POLICY_BAZAAR_DIR, 'models', env_name)
     os.makedirs(env_root, exist_ok=True)
-    model_name = '{}_interval_{}.p'.format(ENV_INFO[env_name]['model_name'],
-                                           (MAX_PRE_TRAINED_LEVEL + 1) - pre_trained)
-    wandb.restore(name=model_name, run_path=run_id, replace=True, root=env_root)
+    model_name = '{}_{}.0.p'.format(ENV_IDS[env_name]['model_name'], ENV_IDS[env_name]['models'][pre_trained])
+    wandb.restore(name=model_name, run_path=path, replace=True, root=env_root)
     model = ActorCriticNetwork(run.config['observation_size'],
                                run.config['action_size'],
                                hidden_dim=64,
