@@ -53,8 +53,9 @@ PARENT_CHILD_ENVS = {'d4rl:antmaze-umaze-v0': ['d4rl:antmaze-umaze-diverse-v0'],
                                      'd4rl:walker2d-medium-replay-v0', 'd4rl:walker2d-medium-expert-v0'],
                      'Hopper-v2': ['d4rl:hopper-random-v0', 'd4rl:hopper-medium-v0', 'd4rl:hopper-expert-v0',
                                    'd4rl:hopper-medium-replay-v0', 'd4rl:hopper-medium-expert-v0'],
-                     'HalfCheetah-v2': ['d4rl:cheetah-random-v0', 'd4rl:cheetah-medium-v0', 'd4rl:cheetah-expert-v0',
-                                        'd4rl:halfcheetah-medium-replay-v0', 'd4rl:halfcheetah-medium-expert-v0']}
+                     'HalfCheetah-v2': ['d4rl:halfcheetah-random-v0', 'd4rl:halfcheetah-medium-v0',
+                                        'd4rl:halfcheetah-expert-v0', 'd4rl:halfcheetah-medium-replay-v0',
+                                        'd4rl:halfcheetah-medium-expert-v0']}
 
 CHILD_PARENT_ENVS = {}
 for parent_env in PARENT_CHILD_ENVS:
