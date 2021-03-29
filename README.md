@@ -50,7 +50,7 @@ pip install -e .
 
 ## What's New:
 - **29th Mar, 2021:**
-    - Initial release(alpha2) with pre-trained policies for maze2d and some environments in mujoco(gym) in d4rl.
+    - Initial release(alpha2) with pre-trained policies for maze2d and some environments in mujoco(gym) which have been also used in d4rl.
     - policies were hand-picked
 - **23rd Mar, 2021:**
     - Initial release(alpha1) with pre-trained policies for maze2d in d4rl. 
