@@ -1,26 +1,50 @@
 # -*- coding: utf-8 -*-
-import wandb
+import argparse
+import os
+import pickle
+from pathlib import Path
 
-PROJECT_URL = 'koulanurag/pytorch-drl'
-from policybazaar.config import MAX_PRE_TRAINED_LEVEL, MIN_PRE_TRAINED_LEVEL
+import gym
+import numpy as np
+import torch
+
+from policybazaar.config import MAX_PRE_TRAINED_LEVEL, MIN_PRE_TRAINED_LEVEL, ENV_IDS
 
 
-def get_env_info():
-    api = wandb.Api()
+def generate_env_stats(env_name, test_episodes, stats_dir, no_cache=False):
+    env_stats_path = os.path.join(stats_dir, env_name + '.p')
+    if not no_cache:
+        if os.path.exists(env_stats_path):
+            print('Using Existing stats from :{}'.format(env_stats_path))
+            return pickle.load(open(env_stats_path, 'rb'))
+
+    import policybazaar
+    from policybazaar.config import MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL
 
     env_info = {}
-    for run in [r for r in api.runs(PROJECT_URL) if r.config['observation_noise_std'] == 0.01]:
-        env_name = run.config['case'] + ':' + run.config['env_name']
-        env_info[env_name] = {'wandb_run_id': PROJECT_URL + '/' + run.id}
-        history = run.scan_history()
-        env_info[env_name]['info'] = {}
+    print(env_name)
+    for pre_trained_id in range(MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL + 1):
+        env = gym.make(env_name)
+        env.seed(0)
+        model, _ = policybazaar.get_policy(env_name, pre_trained_id)
+        episode_rewards = []
+        for episode_i in range(test_episodes):
+            done = False
+            episode_reward = 0
+            obs = env.reset()
+            while not done:
+                action_dist = model.actor(torch.tensor(obs).unsqueeze(0).float())
+                action = action_dist.mean.data.numpy()[0]
+                obs, reward, done, step_info = env.step(action)
+                episode_reward += reward
+            episode_rewards.append(episode_reward)
 
-        for row in history:
-            if 'save_interval' in row:
-                pre_train_marker = 'pre_trained={}'.format(MAX_PRE_TRAINED_LEVEL + 1 - row['save_interval'])
-                env_info[env_name]['info'][pre_train_marker] = {'score_mean': round(row['interval_test_score'], 1),
-                                                                'score_std': round(row["interval_test_score_std"], 1)}
+        episode_rewards = np.array(episode_rewards)
+        mean = round(episode_rewards.mean(), 2)
+        std = round(episode_rewards.std(), 2)
+        env_info[pre_trained_id] = {'score_mean': mean, 'score_std': std}
 
+    pickle.dump(env_info, open(env_stats_path, 'wb'))
     return env_info
 
 
@@ -37,19 +61,33 @@ def markdown_pre_trained_scores(env_info):
     for env_name in env_info:
         msg += "|{}|".format("`{}`".format(env_name))
         for i in range(MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL + 1):
-            _key = 'pre_trained={}'.format(i)
-            if _key in env_info[env_name]['info']:
-                pre_trained_info = env_info[env_name]['info'][_key]
-                msg += '{}±{} |'.format(pre_trained_info['score_mean'], pre_trained_info['score_std'])
-            else:
-                msg += ' |'
+            msg += '{}±{} |'.format(env_info[env_name][i]['score_mean'], env_info[env_name][i]['score_std'])
         msg += '\n'
     return msg
 
 
 if __name__ == '__main__':
-    env_info = get_env_info()
-    print(env_info)
+    # Lets gather arguments
+    parser = argparse.ArgumentParser(description='Generate stats for environment')
+    parser.add_argument('--env-name', required=False, type=str, help='Name of the environment',
+                        default='d4rl:maze2d-open-v0')
+    parser.add_argument('--test-episodes', required=False, default=20, type=int,
+                        help='No. of episodes for evaluation')
+    parser.add_argument('--all-envs', default=False, action='store_true',
+                        help="Generate stats for all envs (default: %(default)s)")
+    parser.add_argument('--no-cache', default=False, action='store_true',
+                        help="Doesn't use pre-generated stats  (default: %(default)s)")
+    parser.add_argument('--stats-dir', type=str,
+                        default=os.path.join(str(Path.home()), '.policybazaar', 'generated_stats'))
 
-    table_markdown = markdown_pre_trained_scores(env_info)
+    args = parser.parse_args()
+    os.makedirs(args.stats_dir, exist_ok=True)
+    stats_info = {}
+
+    for env_name in (ENV_IDS.keys() if args.all_envs else [args.env_name]):
+        stats_info[env_name] = generate_env_stats(env_name, args.test_episodes, args.stats_dir,
+                                                  no_cache=args.no_cache)
+    print(stats_info)
+
+    table_markdown = markdown_pre_trained_scores(stats_info)
     print(table_markdown)
