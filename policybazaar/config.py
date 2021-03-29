@@ -5,7 +5,7 @@ POLICY_BAZAAR_DIR = os.getenv('POLICY_BAZAAR_DIR', default=os.path.join(str(Path
 MIN_PRE_TRAINED_LEVEL = 1
 MAX_PRE_TRAINED_LEVEL = 4
 
-BASE_PROJECT_URL = 'koulanurag/pytorch-private-drl/'
+BASE_PROJECT_URL = 'koulanurag/pytorch-drl/'
 
 ENV_IDS = {
     # sparse
