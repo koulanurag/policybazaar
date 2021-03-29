@@ -24,10 +24,10 @@ pip install -e .
 ## Usage
 
 ```python console
->>> import policybazaar, gym
+>>> import policybazaar, gym, torch
 >>> model, model_info = policybazaar.get_policy('d4rl:maze2d-open-v0',pre_trained=1)
 >>> model_info
-{'score_mean': 113.0, 'score_std': 18.3}
+{'score_mean': 122.2, 'score_std': 10.61}
 
 >>> episode_reward = 0
 >>> done = False
@@ -39,7 +39,7 @@ pip install -e .
 ...    obs, reward, done, step_info = env.step(action)
 ...    episode_reward += reward
 >>> episode_reward
-100.0
+108.0
 
 ```
 
