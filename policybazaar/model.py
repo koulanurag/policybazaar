@@ -34,6 +34,7 @@ class ActorNetwork(nn.Module):
     def __init__(self, state_dim, num_actions, hidden_dim, action_std):
         super(ActorNetwork, self).__init__()
 
+        self.num_actions = num_actions
         self.linear1 = nn.Linear(state_dim, hidden_dim)
         self.linear2 = nn.Linear(hidden_dim, hidden_dim)
         self.linear3 = nn.Linear(hidden_dim, num_actions)

@@ -10,7 +10,7 @@ from .model import ActorCriticNetwork
 
 def get_policy(env_name: str, pre_trained: int = 1) -> (ActorCriticNetwork, dict):
     """
-    Retrieves policies for the environment with the pre-trained marker quality.
+    Retrieves policies for the environment with the pre-trained quality marker.
 
     :param env_name:  name of the environment
     :param pre_trained: pre_trained level . It should be between 1 and 5 ,

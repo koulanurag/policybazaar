@@ -83,7 +83,7 @@ In the following, we report performance of various pre-trained models. These sco
 |`d4rl:antmaze-medium-diverse-v0`|0.0±0.0 |0.0±0.0 |0.0±0.0 |0.0±0.0 |
 |`d4rl:antmaze-large-diverse-v0`|0.0±0.0 |0.0±0.0 |0.0±0.0 |0.0±0.0 |
 
-### :small_blue_diamond: [mujoco(gym)](https://github.com/rail-berkeley/d4rl/wiki/Tasks#antmaze)
+### :small_blue_diamond: [mujoco(gym)](https://gym.openai.com/envs/#mujoco)
 <p float="left">
     <img width="200" alt="mujoco-halfcheetah" src="static/halfcheetah.png" /> 
     <img width="200" alt="mujoco-hopper" src="static/hopper.png" />

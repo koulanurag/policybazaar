@@ -24,11 +24,11 @@ def generate_env_stats(env_name, test_episodes, stats_dir, no_cache=False):
     env_info = {}
     print(env_name)
     for pre_trained_id in range(MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL + 1):
-        env = gym.make(env_name)
-        env.seed(0)
         model, _ = policybazaar.get_policy(env_name, pre_trained_id)
         episode_rewards = []
         for episode_i in range(test_episodes):
+            env = gym.make(env_name)
+            env.seed(episode_i)
             done = False
             episode_reward = 0
             obs = env.reset()
@@ -38,6 +38,7 @@ def generate_env_stats(env_name, test_episodes, stats_dir, no_cache=False):
                 obs, reward, done, step_info = env.step(action)
                 episode_reward += reward
             episode_rewards.append(episode_reward)
+            env.close()
 
         episode_rewards = np.array(episode_rewards)
         mean = round(episode_rewards.mean(), 2)
