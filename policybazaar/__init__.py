@@ -2,7 +2,6 @@ import os
 
 import torch
 import wandb
-
 from .config import ENV_IDS, POLICY_BAZAAR_DIR, MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL
 from .config import ENV_PERFORMANCE_STATS, CHILD_PARENT_ENVS
 
@@ -42,9 +41,9 @@ def get_policy(env_name: str, pre_trained: int = 1):
 
     if 'cassie' in env_name:
         # retrieve model
-        model_name = '{}_{}.0.p'.format(ENV_IDS[env_name]['model_name'], ENV_IDS[env_name]['models'][pre_trained])
+        model_name = '{}.p'.format(ENV_IDS[env_name]['model_name'])
         from .cassie_model import ActorCriticNetwork
-        model = ActorCriticNetwork(47, 10, 256)
+        model = ActorCriticNetwork(**run.config['model_kwargs'])
     else:
         # retrieve model
         model_name = '{}_{}.0.p'.format(ENV_IDS[env_name]['model_name'], ENV_IDS[env_name]['models'][pre_trained])
