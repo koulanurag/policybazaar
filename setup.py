@@ -4,6 +4,7 @@ import setuptools
 from setuptools import setup
 
 extras = {
+    'cassie': ['cassie @git+https://git@github.com/koulanurag/cassie@master#egg=cassie'],
     'test': ['pytest', 'pytest_cases'],
 }
 # Meta dependency groups.
