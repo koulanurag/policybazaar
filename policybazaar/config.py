@@ -50,11 +50,10 @@ MUJOCO_ENV_IDS = {'HalfCheetah-v2': {'wandb_run_path': MUJOCO_BASE_PROJECT_URL +
 
 # Cassie
 CASSIE_BASE_PROJECT_URL = 'offline-drl-team/cassie/'
-CASSIE_ENV_IDS = {'cassie:Cassie-v0': {'wandb_run_path': CASSIE_BASE_PROJECT_URL + 't669pz0z', 'models': {1: 0}},
-                  'cassie:Cassie-v1': {'wandb_run_path': CASSIE_BASE_PROJECT_URL + 't669pz0z', 'models': {1: 0}},
-                  'cassie:CassieWalkSlow-v0': {'wandb_run_path': CASSIE_BASE_PROJECT_URL + 't669pz0z', 'models': {1: 0}},
-                  'cassie:CassieStand-v0': {'wandb_run_path': CASSIE_BASE_PROJECT_URL + 't669pz0z', 'models': {1: 0}},
-                  'cassie:CassieWalkFast-v0': {'wandb_run_path': CASSIE_BASE_PROJECT_URL + 't669pz0z', 'models': {1: 0}}}
+CASSIE_ENV_IDS = {
+    'cassie:CassieWalkSlow-v0': {'wandb_run_path': CASSIE_BASE_PROJECT_URL + '3cxlmmfu', 'models': {1: 0}},
+    'cassie:CassieStand-v0': {'wandb_run_path': CASSIE_BASE_PROJECT_URL + '18par2uc', 'models': {1: 0}},
+    'cassie:CassieWalkFast-v0': {'wandb_run_path': CASSIE_BASE_PROJECT_URL + '2q816ycl', 'models': {1: 0}}}
 
 ENV_IDS = {**MAZE_ENV_IDS, **MUJOCO_ENV_IDS, **CASSIE_ENV_IDS}
 
