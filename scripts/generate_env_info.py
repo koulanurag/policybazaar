@@ -7,6 +7,7 @@ from pathlib import Path
 import gym
 import numpy as np
 import torch
+import tqdm
 
 from policybazaar.config import MAX_PRE_TRAINED_LEVEL, MIN_PRE_TRAINED_LEVEL, ENV_IDS
 
@@ -19,11 +20,9 @@ def generate_env_stats(env_name, test_episodes, stats_dir, no_cache=False):
             return pickle.load(open(env_stats_path, 'rb'))
 
     import policybazaar
-    from policybazaar.config import MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL
 
     env_info = {}
-    print(env_name)
-    for pre_trained_id in range(MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL + 1):
+    for pre_trained_id in tqdm(sorted(ENV_IDS[env_name]['models'].keys())):
         model, _ = policybazaar.get_policy(env_name, pre_trained_id)
         episode_rewards = []
         for episode_i in range(test_episodes):
@@ -59,7 +58,7 @@ def markdown_pre_trained_scores(env_info):
     msg += '\n'
     msg += "|" + " | ".join(":------:" for _ in range(MAX_PRE_TRAINED_LEVEL + 1)) + ' | ' + '\n'
 
-    for env_name in env_info:
+    for env_name in tqdm(env_info):
         msg += "|{}|".format("`{}`".format(env_name))
         for i in range(MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL + 1):
             msg += '{}±{} |'.format(env_info[env_name][i]['score_mean'], env_info[env_name][i]['score_std'])
@@ -85,7 +84,7 @@ if __name__ == '__main__':
     os.makedirs(args.stats_dir, exist_ok=True)
     stats_info = {}
 
-    for env_name in (ENV_IDS.keys() if args.all_envs else [args.env_name]):
+    for env_name in tqdm((ENV_IDS.keys() if args.all_envs else [args.env_name])):
         stats_info[env_name] = generate_env_stats(env_name, args.test_episodes, args.stats_dir,
                                                   no_cache=args.no_cache)
     print(stats_info)
