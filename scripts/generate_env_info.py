@@ -61,7 +61,10 @@ def markdown_pre_trained_scores(env_info):
     for env_name in tqdm(env_info):
         msg += "|{}|".format("`{}`".format(env_name))
         for i in range(MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL + 1):
-            msg += '{}±{} |'.format(env_info[env_name][i]['score_mean'], env_info[env_name][i]['score_std'])
+            if i in env_info[env_name]:
+                msg += '{}±{} |'.format(env_info[env_name][i]['score_mean'], env_info[env_name][i]['score_std'])
+            else:
+                msg += '- |'
         msg += '\n'
     return msg
 
