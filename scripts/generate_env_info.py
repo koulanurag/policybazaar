@@ -25,7 +25,7 @@ def generate_env_stats(env_name, test_episodes, stats_dir, no_cache=False):
     for pre_trained_id in tqdm(sorted(ENV_IDS[env_name]['models'].keys())):
         model, _ = policybazaar.get_policy(env_name, pre_trained_id)
         episode_rewards = []
-        for episode_i in range(test_episodes):
+        for episode_i in tqdm(range(test_episodes)):
             env = gym.make(env_name)
             env.seed(episode_i)
             done = False

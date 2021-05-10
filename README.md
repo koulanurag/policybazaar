@@ -98,7 +98,9 @@ In the following, we report performance of various pre-trained models. These sco
 
 ***
 
+### :small_blue_diamond: [cassie(gym)](https://github.com/koulanurag/cassie)
+
 | Environment Name |`pre_trained=1` (best) |`pre_trained=2`  |`pre_trained=3`  |`pre_trained=4` (worst) |
 |:------: | :------: | :------: | :------: | :------: | 
-|`cassie:CassieWalkFast-v0`|107.48±72.65 |94.24±71.44 |87.27±73.8 |107.69±73.1 |
+|`cassie:CassieWalkSlow-v0`|121.45±59.06 |- |- |- |
 
