@@ -7,7 +7,7 @@ from pathlib import Path
 import gym
 import numpy as np
 import torch
-import tqdm
+from tqdm import tqdm
 
 from policybazaar.config import MAX_PRE_TRAINED_LEVEL, MIN_PRE_TRAINED_LEVEL, ENV_IDS
 
