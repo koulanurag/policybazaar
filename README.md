@@ -103,4 +103,6 @@ In the following, we report performance of various pre-trained models. These sco
 | Environment Name |`pre_trained=1` (best) |`pre_trained=2`  |`pre_trained=3`  |`pre_trained=4` (worst) |
 |:------: | :------: | :------: | :------: | :------: | 
 |`cassie:CassieWalkSlow-v0`|121.45±59.06 |- |- |- |
+|`cassie:CassieWalkFast-v0`|115.36±67.2 |- |- |- |
+|`cassie:CassieStand-v0`|158.09±28.89 |- |- |- |
 
