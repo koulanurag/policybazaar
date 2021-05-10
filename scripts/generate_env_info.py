@@ -12,7 +12,7 @@ from tqdm import tqdm
 from policybazaar.config import MAX_PRE_TRAINED_LEVEL, MIN_PRE_TRAINED_LEVEL, ENV_IDS
 
 
-def generate_env_stats(env_name, test_episodes, stats_dir, no_cache=False):
+def generate_env_stats(env_name, test_episodes, stats_dir, no_cache=False, render=False):
     env_stats_path = os.path.join(stats_dir, env_name + '.p')
     if not no_cache:
         if os.path.exists(env_stats_path):
@@ -32,6 +32,7 @@ def generate_env_stats(env_name, test_episodes, stats_dir, no_cache=False):
             episode_reward = 0
             obs = env.reset()
             while not done:
+                env.render()
                 action_dist = model.actor(torch.tensor(obs).unsqueeze(0).float())
                 action = action_dist.mean.data.numpy()[0]
                 obs, reward, done, step_info = env.step(action)
@@ -82,6 +83,8 @@ if __name__ == '__main__':
                         help="Doesn't use pre-generated stats  (default: %(default)s)")
     parser.add_argument('--stats-dir', type=str,
                         default=os.path.join(str(Path.home()), '.policybazaar', 'generated_stats'))
+    parser.add_argument('--render',  default=False, action='store_true',
+                        help="Renders the environment while evaluating  (default: %(default)s)")
 
     args = parser.parse_args()
     os.makedirs(args.stats_dir, exist_ok=True)
