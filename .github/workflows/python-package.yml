@@ -52,4 +52,4 @@ jobs:
           LD_LIBRARY_PATH: $LD_LIBRARY_PATH:/home/runner/.mujoco/mujoco200/bin
           WANDB_API_KEY:  ${{ secrets.WANDB_API_KEY }}
         run: |
-          pytest
+          pytest -v
