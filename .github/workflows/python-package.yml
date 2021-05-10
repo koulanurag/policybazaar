@@ -11,6 +11,7 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    environment: pytest
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -34,13 +35,16 @@ jobs:
           cp -r /home/runner/.mujoco/mujoco200_linux/* /home/runner/.mujoco/mujoco200
           echo  "$MUJOCO_KEY" > "/home/runner/.mujoco/mjkey.txt"
       - name: Install pip requirements
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/runner/.mujoco/mujoco200/bin
           python -m pip install --upgrade pip
           pip install flake8
           pip install -e .
-          pip install -e ".[cassie]"
           pip install -e ".[test]"
+          echo $GH_TOKEN
+          pip install -e ".[cassie]"
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names

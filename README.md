@@ -100,6 +100,8 @@ In the following, we report performance of various pre-trained models. These sco
 
 ### :small_blue_diamond: [cassie(gym)](https://github.com/koulanurag/cassie)
 
+Dependency: ``` pip install -e ".[cassie]" ```
+
 | Environment Name |`pre_trained=1` (best) |`pre_trained=2`  |`pre_trained=3`  |`pre_trained=4` (worst) |
 |:------: | :------: | :------: | :------: | :------: | 
 |`cassie:CassieWalkSlow-v0`|121.45±59.06 |- |- |- |
