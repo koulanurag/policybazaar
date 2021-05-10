@@ -1,10 +1,8 @@
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import numpy as np
-
 from torch import sqrt
-
 
 LOG_STD_HI = -1.5
 LOG_STD_LO = -20
@@ -124,14 +122,9 @@ class Gaussian_FF_Actor(Actor):  # more consistent with other actor naming conve
 
         return mean, self.fixed_std
 
-    def forward(self, state, deterministic=True):
+    def forward(self, state):
         mu, sd = self._get_dist_params(state)
-
-        if not deterministic:
-            self.action = torch.distributions.Normal(mu, sd).sample()
-        else:
-            self.action = mu
-
+        self.action = torch.distributions.Normal(mu, sd)
         return self.action
 
     def get_action(self):
