@@ -12,7 +12,7 @@ It requires:
 
 Python package and dependencies could be installed using:
 ```bash
-pip install git+https://github.com/koulanurag/policybazaar@master#egg=policybazaar
+pip install git+https://github.com/koulanurag/policybazaar@main#egg=policybazaar
 ```
 Or
 ```bash

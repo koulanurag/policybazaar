@@ -4,9 +4,9 @@ name: Python package
 
 on:
   push:
-    branches: [ cassie ]
+    branches: [ main ]
   pull_request:
-    branches: [ cassie ]
+    branches: [ main ]
 
 jobs:
   build:
