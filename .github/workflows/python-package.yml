@@ -42,7 +42,7 @@ jobs:
           pip install flake8
           pip install -e .
           pip install -e ".[test]"
-          pip install git+https://$GH_TOKEN@github.com/koulanurag/cassie@master#egg=cassie
+          pip install git+https://$GH_TOKEN@github.com/koulanurag/cassie@main#egg=cassie
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
