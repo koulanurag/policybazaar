@@ -50,6 +50,8 @@ pip install -e .
 
 ## What's New:
 - **29th Mar, 2021:**
+    -  release(alpha3) includes cassie policies
+- **29th Mar, 2021:**
     - Initial release(alpha2) with pre-trained policies for maze2d and some environments in mujoco(gym) which have been also used in d4rl.
     - policies were hand-picked
 - **23rd Mar, 2021:**
