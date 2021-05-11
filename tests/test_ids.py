@@ -3,13 +3,16 @@ import pytest
 import torch
 
 import policybazaar
-from policybazaar.config import ENV_IDS, MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL, CHILD_PARENT_ENVS
+from policybazaar.config import ENV_IDS, CHILD_PARENT_ENVS, CASSIE_ENV_IDS
 
 
-@pytest.mark.parametrize('env_name,pre_trained', [(env_name, pre_trained)
-                                                  for env_name in list(ENV_IDS.keys()) + list(CHILD_PARENT_ENVS.keys())
-                                                  for pre_trained in range(MIN_PRE_TRAINED_LEVEL,
-                                                                           MAX_PRE_TRAINED_LEVEL + 1)])
+@pytest.mark.parametrize('env_name,pre_trained',
+                         [(env_name, pre_trained)
+                          # for env_name in list(ENV_IDS.keys()) + list(CHILD_PARENT_ENVS.keys())
+                          for env_name in list(CASSIE_ENV_IDS.keys())
+                          for pre_trained in
+                          (ENV_IDS[env_name]['models']
+                          if env_name in ENV_IDS else ENV_IDS[CHILD_PARENT_ENVS[env_name]]['models'])])
 def test_wandb_ids(env_name, pre_trained):
     model, model_info = policybazaar.get_policy(env_name, pre_trained)
 

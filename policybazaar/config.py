@@ -5,46 +5,56 @@ POLICY_BAZAAR_DIR = os.getenv('POLICY_BAZAAR_DIR', default=os.path.join(str(Path
 MIN_PRE_TRAINED_LEVEL = 1
 MAX_PRE_TRAINED_LEVEL = 4
 
-BASE_PROJECT_URL = 'koulanurag/pytorch-drl/'
+MAZE_BASE_PROJECT_URL = 'koulanurag/pytorch-drl/'
+MUJOCO_BASE_PROJECT_URL = 'koulanurag/pytorch-drl/'
 
-ENV_IDS = {
+MAZE_ENV_IDS = {
     # sparse
-    'd4rl:maze2d-open-v0': {'wandb_run_id': '3rd5zlnh',
+    'd4rl:maze2d-open-v0': {'wandb_run_path': MAZE_BASE_PROJECT_URL + '3rd5zlnh',
                             # pre_trained_id : wand_model_save_id
                             # 1: best, 4: worst
                             'models': {1: 50, 2: 20, 3: 10, 4: 1}},
-    'd4rl:maze2d-medium-v1': {'wandb_run_id': 'gplzxs8a',
+    'd4rl:maze2d-medium-v1': {'wandb_run_path': MAZE_BASE_PROJECT_URL + 'gplzxs8a',
                               'models': {1: 25, 2: 47, 3: 2, 4: 1}},
-    'd4rl:maze2d-umaze-v1': {'wandb_run_id': 'e15ildhv',
+    'd4rl:maze2d-umaze-v1': {'wandb_run_path': MAZE_BASE_PROJECT_URL + 'e15ildhv',
                              'models': {1: 50, 2: 12, 3: 5, 4: 1}},
-    'd4rl:maze2d-large-v1': {'wandb_run_id': '1vi4gkf8',
+    'd4rl:maze2d-large-v1': {'wandb_run_path': MAZE_BASE_PROJECT_URL + '1vi4gkf8',
                              'models': {1: 35, 2: 30, 3: 15, 4: 1}},
 
     # dense
-    'd4rl:maze2d-open-dense-v0': {'wandb_run_id': '111lwjn6',
+    'd4rl:maze2d-open-dense-v0': {'wandb_run_path': MAZE_BASE_PROJECT_URL + '111lwjn6',
                                   'models': {1: 50, 2: 15, 3: 10, 4: 1}},
-    'd4rl:maze2d-medium-dense-v1': {'wandb_run_id': '1huhpfht',
+    'd4rl:maze2d-medium-dense-v1': {'wandb_run_path': MAZE_BASE_PROJECT_URL + '1huhpfht',
                                     'models': {1: 15, 2: 40, 3: 2, 4: 1}},
-    'd4rl:maze2d-umaze-dense-v1': {'wandb_run_id': '1rsf3y79',
+    'd4rl:maze2d-umaze-dense-v1': {'wandb_run_path': MAZE_BASE_PROJECT_URL + '1rsf3y79',
                                    'models': {1: 50, 2: 8, 3: 4, 4: 1}},
-    'd4rl:maze2d-large-dense-v1': {'wandb_run_id': '20cxp3qr',
+    'd4rl:maze2d-large-dense-v1': {'wandb_run_path': MAZE_BASE_PROJECT_URL + '20cxp3qr',
                                    'models': {1: 25, 2: 14, 3: 10, 4: 1}},
 
     # antmaze
-    'd4rl:antmaze-umaze-v0': {'wandb_run_id': '1yv3t59a',
+    'd4rl:antmaze-umaze-v0': {'wandb_run_path': MAZE_BASE_PROJECT_URL + '1yv3t59a',
                               'models': {1: 25, 2: 15, 3: 10, 4: 1}},
-    'd4rl:antmaze-medium-diverse-v0': {'wandb_run_id': '20l3hp3w',
+    'd4rl:antmaze-medium-diverse-v0': {'wandb_run_path': MAZE_BASE_PROJECT_URL + '20l3hp3w',
                                        'models': {1: 25, 2: 15, 3: 10, 4: 1}},
-    'd4rl:antmaze-large-diverse-v0': {'wandb_run_id': '1c6b1a2e',
+    'd4rl:antmaze-large-diverse-v0': {'wandb_run_path': MAZE_BASE_PROJECT_URL + '1c6b1a2e',
                                       'models': {1: 25, 2: 15, 3: 10, 4: 1}},
+}
 
-    # mujoco(gym)
-    'HalfCheetah-v2': {'wandb_run_id': 't669pz0z',
-                       'models': {1: 25, 2: 15, 3: 10, 4: 1}},
-    'Hopper-v2': {'wandb_run_id': '21k6p0fq',
-                  'models': {1: 50, 2: 35, 3: 8, 4: 1}},
-    'Walker2d-v2': {'wandb_run_id': '17mv3xec',
-                    'models': {1: 35, 2: 15, 3: 8, 4: 1}}}
+# mujoco(gym)
+MUJOCO_ENV_IDS = {'HalfCheetah-v2': {'wandb_run_path': MUJOCO_BASE_PROJECT_URL + 't669pz0z',
+                                     'models': {1: 25, 2: 15, 3: 10, 4: 1}},
+                  'Hopper-v2': {'wandb_run_path': MUJOCO_BASE_PROJECT_URL + '21k6p0fq',
+                                'models': {1: 50, 2: 35, 3: 8, 4: 1}},
+                  'Walker2d-v2': {'wandb_run_path': MUJOCO_BASE_PROJECT_URL + '17mv3xec',
+                                  'models': {1: 35, 2: 15, 3: 8, 4: 1}}}
+
+# Cassie
+CASSIE_BASE_PROJECT_URL = 'offline_drl_team/cassie/'
+CASSIE_ENV_IDS = {'cassie:CassieWalkSlow-v0': {'wandb_run_path': CASSIE_BASE_PROJECT_URL + '2l2ah4qu', 'models': {1: 0}},
+                  'cassie:CassieStand-v0': {'wandb_run_path': CASSIE_BASE_PROJECT_URL + '1016bat5', 'models': {1: 0}},
+                  'cassie:CassieWalkFast-v0': {'wandb_run_path': CASSIE_BASE_PROJECT_URL + '2mzeew14', 'models': {1: 0}}}
+
+ENV_IDS = {**MAZE_ENV_IDS, **MUJOCO_ENV_IDS, **CASSIE_ENV_IDS}
 
 PARENT_CHILD_ENVS = {'d4rl:antmaze-umaze-v0': ['d4rl:antmaze-umaze-diverse-v0'],
                      'd4rl:antmaze-medium-diverse-v0': ['d4rl:antmaze-medium-play-v0'],

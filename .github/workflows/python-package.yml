@@ -4,9 +4,9 @@ name: Python package
 
 on:
   push:
-    branches: [ main ]
+    branches: [ cassie ]
   pull_request:
-    branches: [ main ]
+    branches: [ cassie ]
 
 jobs:
   build:
@@ -34,12 +34,15 @@ jobs:
           cp -r /home/runner/.mujoco/mujoco200_linux/* /home/runner/.mujoco/mujoco200
           echo  "$MUJOCO_KEY" > "/home/runner/.mujoco/mjkey.txt"
       - name: Install pip requirements
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/runner/.mujoco/mujoco200/bin
           python -m pip install --upgrade pip
           pip install flake8
           pip install -e .
           pip install -e ".[test]"
+          pip install git+https://$GH_TOKEN@github.com/koulanurag/cassie@main#egg=cassie
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
@@ -48,7 +51,8 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test with pytest
         env:
-          LD_LIBRARY_PATH: $LD_LIBRARY_PATH:/home/runner/.mujoco/mujoco200/bin
           WANDB_API_KEY:  ${{ secrets.WANDB_API_KEY }}
         run: |
-          pytest
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.mujoco/mujoco200/bin
+          export MUJOCO_KEY_PATH=$HOME/.mujoco/mjkey.txt
+          pytest -v
