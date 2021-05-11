@@ -44,6 +44,15 @@ def get_policy(env_name: str, pre_trained: int = 1):
         model_name = '{}.p'.format(ENV_IDS[env_name]['model_name'])
         from .cassie_model import ActorCriticNetwork
         model = ActorCriticNetwork(**run.config['model_kwargs'])
+        wandb.restore(name=model_name, run_path=run_path, replace=True, root=env_root)
+
+        model_data = torch.load(os.path.join(env_root, model_name), map_location=torch.device('cpu'))
+        model.load_state_dict(model_data['state_dict'])
+        model.actor.obs_std = model_data["act_obs_std"]
+        model.actor.obs_mean = model_data["act_obs_mean"]
+        model.critic.obs_std = model_data["critic_obs_std"]
+        model.critic.obs_mean = model_data["critic_obs_mean"]
+
     else:
         # retrieve model
         model_name = '{}_{}.0.p'.format(ENV_IDS[env_name]['model_name'], ENV_IDS[env_name]['models'][pre_trained])
@@ -54,6 +63,6 @@ def get_policy(env_name: str, pre_trained: int = 1):
                                    hidden_dim=64,
                                    action_std=0.5)
 
-    wandb.restore(name=model_name, run_path=run_path, replace=True, root=env_root)
-    model.load_state_dict(torch.load(os.path.join(env_root, model_name), map_location=torch.device('cpu')))
+        wandb.restore(name=model_name, run_path=run_path, replace=True, root=env_root)
+        model.load_state_dict(torch.load(os.path.join(env_root, model_name), map_location=torch.device('cpu')))
     return model, info

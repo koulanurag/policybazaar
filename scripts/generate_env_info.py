@@ -32,7 +32,8 @@ def generate_env_stats(env_name, test_episodes, stats_dir, no_cache=False, rende
             episode_reward = 0
             obs = env.reset()
             while not done:
-                env.render()
+                if render:
+                    env.render()
                 action_dist = model.actor(torch.tensor(obs).unsqueeze(0).float())
                 action = action_dist.mean.data.numpy()[0]
                 obs, reward, done, step_info = env.step(action)
@@ -92,7 +93,7 @@ if __name__ == '__main__':
 
     for env_name in tqdm((ENV_IDS.keys() if args.all_envs else [args.env_name])):
         stats_info[env_name] = generate_env_stats(env_name, args.test_episodes, args.stats_dir,
-                                                  no_cache=args.no_cache)
+                                                  no_cache=args.no_cache, render=args.render)
     print(stats_info)
 
     table_markdown = markdown_pre_trained_scores(stats_info)
