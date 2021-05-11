@@ -11,7 +11,7 @@ extras = {
 extras['all'] = [item for group in extras.values() for item in group]
 
 setup(name='policybazaar',
-      version='0.0.1-alpha2',
+      version='0.0.1-alpha3',
       description='A collection of different quality policies for reinforcement learning.',
       long_description_content_type='text/markdown',
       long_description=open(path.join(path.abspath(path.dirname(__file__)), 'README.md'), encoding='utf-8').read(),
