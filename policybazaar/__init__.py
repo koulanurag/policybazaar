@@ -2,6 +2,7 @@ import os
 
 import torch
 import wandb
+
 from .config import ENV_IDS, POLICY_BAZAAR_DIR, MIN_PRE_TRAINED_LEVEL, MAX_PRE_TRAINED_LEVEL
 from .config import ENV_PERFORMANCE_STATS, CHILD_PARENT_ENVS
 
@@ -36,7 +37,8 @@ def get_policy(env_name: str, pre_trained: int = 1):
 
     run_path = ENV_IDS[env_name]['wandb_run_path']
     run = wandb.Api().run(run_path)
-    env_root = os.path.join(env_name, POLICY_BAZAAR_DIR, 'models', env_name)
+    env_root = os.path.join(env_name, POLICY_BAZAAR_DIR, env_name, 'pre_trained_{}'.format(pre_trained),
+                            'models')
     os.makedirs(env_root, exist_ok=True)
 
     if 'cassie' in env_name:
@@ -66,3 +68,40 @@ def get_policy(env_name: str, pre_trained: int = 1):
         wandb.restore(name=model_name, run_path=run_path, replace=True, root=env_root)
         model.load_state_dict(torch.load(os.path.join(env_root, model_name), map_location=torch.device('cpu')))
     return model, info
+
+
+def __download_dataset(env_name: str, pre_trained: int = 1, no_cache=False):
+    run_path = ENV_IDS[env_name]['wandb_run_path']
+    dataset_name = 'dataset_{}.h5'.format(ENV_IDS[env_name]['models'][pre_trained])
+    dataset_root = os.path.join(env_name, POLICY_BAZAAR_DIR, env_name, 'pre_trained_{}'.format(pre_trained),
+                                'dataset')
+    os.makedirs(dataset_root, exist_ok=True)
+    dataset_path = os.path.join(dataset_root, dataset_name)
+    if not (os.path.exists(dataset_path)) or no_cache:
+        wandb.restore(name=dataset_name, run_path=run_path, replace=True, root=dataset_root)
+
+    return dataset_path
+
+
+def get_dataset(env_name: str, pre_trained: int = 1, no_cache=False):
+    """
+    Retrieves dataset specific to pre-trained policies of an environment.
+
+    :param env_name:  name of the environment
+    :param pre_trained: pre_trained level . It should be between 1 and 5 ,
+                        where 1 indicates best model and 5 indicates worst level.
+
+    Example:
+        >>> import policybazaar
+        >>> policybazaar.get_dataset('d4rl:maze2d-open-v0',pre_trained=1)
+    """
+    from d4rl.offline_env import OfflineEnvWrapper
+    import gym
+    if 'd4rl' in env_name:
+        d4rl_env = gym.make(env_name)
+    else:
+        env = gym.make(env_name)
+        d4rl_env = OfflineEnvWrapper(env)
+
+    dataset_path = __download_dataset(env_name, pre_trained, no_cache)
+    return d4rl_env.get_dataset(h5path=dataset_path)
