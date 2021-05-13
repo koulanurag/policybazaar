@@ -107,11 +107,10 @@ def get_dataset(env_name: str, pre_trained: int = 1, no_cache=False):
     """
     from d4rl.offline_env import OfflineEnvWrapper
     import gym
-    if 'd4rl' in env_name:
-        d4rl_env = gym.make(env_name)
-    else:
-        env = gym.make(env_name)
-        d4rl_env = OfflineEnvWrapper(env)
+
+    env = gym.make(env_name)
+    if 'd4rl:' not in env_name:
+        env = OfflineEnvWrapper(env)
 
     dataset_path = __download_dataset(env_name, pre_trained, no_cache)
-    return d4rl_env.get_dataset(h5path=dataset_path)
+    return env.get_dataset(h5path=dataset_path)
