@@ -70,9 +70,19 @@ def get_policy(env_name: str, pre_trained: int = 1):
     return model, info
 
 
+def __get_env_info(env_name):
+    if env_name in ENV_IDS:
+        return ENV_IDS[env_name]
+    elif env_name in CHILD_PARENT_ENVS:
+        return ENV_IDS[CHILD_PARENT_ENVS[env_name]]
+    else:
+        KeyError('{} not found'.format(env_name))
+
+
 def __download_dataset(env_name: str, pre_trained: int = 1, no_cache=False):
-    run_path = ENV_IDS[env_name]['wandb_run_path']
-    dataset_name = 'dataset_{}.h5'.format(ENV_IDS[env_name]['models'][pre_trained])
+    env_info = __get_env_info(env_name)
+    run_path = env_info['wandb_run_path']
+    dataset_name = 'dataset_{}.h5'.format(env_info['models'][pre_trained])
     dataset_root = os.path.join(env_name, POLICY_BAZAAR_DIR, env_name, 'pre_trained_{}'.format(pre_trained),
                                 'dataset')
     os.makedirs(dataset_root, exist_ok=True)

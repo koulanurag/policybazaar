@@ -41,6 +41,10 @@ pip install -e .
 >>> episode_reward
 108.0
 
+>>> # Let's get dataset corresponding to a policy
+>>> dataset = policy.get_dataset('d4rl:maze2d-open-v0',pre_trained=1)
+>>> dataset
+
 ```
 
 ## Testing:
