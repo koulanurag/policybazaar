@@ -39,8 +39,10 @@ pip install -e .
 ...    obs, reward, done, step_info = env.step(action)
 ...    episode_reward += reward
 >>> episode_reward
-108.0
+120
 
+>>> # Let's get dataset corresponding to a policy
+>>> dataset = policybazaar.get_dataset('d4rl:maze2d-open-v0',pre_trained=1)
 ```
 
 ## Testing:
