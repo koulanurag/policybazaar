@@ -84,9 +84,8 @@ if __name__ == '__main__':
                         help="Doesn't use pre-generated stats  (default: %(default)s)")
     parser.add_argument('--stats-dir', type=str,
                         default=os.path.join(str(Path.home()), '.policybazaar', 'generated_stats'))
-    parser.add_argument('--render',  default=False, action='store_true',
+    parser.add_argument('--render', default=False, action='store_true',
                         help="Renders the environment while evaluating  (default: %(default)s)")
-
     args = parser.parse_args()
     os.makedirs(args.stats_dir, exist_ok=True)
     stats_info = {}
