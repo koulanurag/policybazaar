@@ -16,7 +16,7 @@ def test_model_exists(env_name, pre_trained):
 
     env = gym.make(env_name)
     obs = env.reset()
-    action = model.actor(torch.tensor(obs).unsqueeze(0).float()).mean.data.numpy()[0]
+    action = model.actor(torch.tensor(obs).unsqueeze(0).float()).data.numpy()[0]
     env.step(action)
     env.close()
 
