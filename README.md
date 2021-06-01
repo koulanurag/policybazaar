@@ -34,7 +34,7 @@ pip install -e .
 >>> env = gym.make('d4rl:maze2d-open-v0')
 >>> obs = env.reset()
 >>> while not done:
-...    action_dist = model.actor(torch.tensor(obs).unsqueeze(0).float())
+...    action = model.actor(torch.tensor(obs).unsqueeze(0).float())
 ...    action = action_dist.mean.data.numpy()[0]
 ...    obs, reward, done, step_info = env.step(action)
 ...    episode_reward += reward

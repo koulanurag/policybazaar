@@ -46,9 +46,13 @@ class ActorNetwork(nn.Module):
         x = torch.tanh(self.linear1(state))
         x = torch.tanh(self.linear2(x))
         action_mean = torch.tanh(self.linear3(x))
+
+        return action_mean
+
+    def dist(self, state):
+        action_mean = self.forward(state)
         cov_mat = torch.diag(self.action_var)
         dist = MultivariateNormal(action_mean, cov_mat)
-
         return dist
 
     def to(self, device):
