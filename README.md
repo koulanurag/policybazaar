@@ -111,3 +111,4 @@ Dependency: ``` pip install -e ".[cassie]" ```
 |`cassie:CassieWalkSlow-v0`|267.36±2.84 |- |- |- |
 |`cassie:CassieWalkFast-v0`|208.78±68.99 |- |- |- |
 |`cassie:CassieStand-v0`|289.93±2.03 |- |- |- |
+|`cassie:CassieHop-v0`|184.27±71.62 |- |- |- |
