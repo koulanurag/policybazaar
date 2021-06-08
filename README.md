@@ -35,8 +35,7 @@ pip install -e .
 >>> obs = env.reset()
 >>> while not done:
 ...    action = model.actor(torch.tensor(obs).unsqueeze(0).float())
-...    action = action_dist.mean.data.numpy()[0]
-...    obs, reward, done, step_info = env.step(action)
+...    obs, reward, done, step_info = env.step(action.data.cpu().numpy()[0])
 ...    episode_reward += reward
 >>> episode_reward
 120
