@@ -124,15 +124,14 @@ class Gaussian_FF_Actor(Actor):  # more consistent with other actor naming conve
 
     def forward(self, state, deterministic=True):
         mu, sd = self._get_dist_params(state)
+        self.action = mu
 
-        self.action = torch.distributions.Normal(mu, sd)
-
-        return self.action
+        return mu
 
     def get_action(self):
         return self.action
 
-    def distribution(self, inputs):
+    def dist(self, inputs):
         mu, sd = self._get_dist_params(inputs)
         return torch.distributions.Normal(mu, sd)
 
@@ -198,7 +197,7 @@ class FF_V(Critic):
             self.apply(normc_fn)
 
     def forward(self, inputs):
-        if self.training == False:
+        if not self.training:
             inputs = (inputs - self.obs_mean) / self.obs_std
 
         x = inputs
