@@ -73,9 +73,9 @@ for version in [2]:
                                                        'd4rl:hopper-expert-v{}'.format(version),
                                                        'd4rl:hopper-medium-replay-v{}'.format(version),
                                                        'd4rl:hopper-medium-expert-v{}'.format(version)]
-    PARENT_CHILD_ENVS['HalfCheetah-v{}'.format(version)] = ['d4rl:halfcheetah-v{}'.format(version),
-                                                            'd4rl:halfcheetah-v{}'.format(version),
-                                                            'd4rl:halfcheetah-v{}'.format(version),
+    PARENT_CHILD_ENVS['HalfCheetah-v{}'.format(version)] = ['d4rl:halfcheetah-random-v{}'.format(version),
+                                                            'd4rl:halfcheetah-medium-v{}'.format(version),
+                                                            'd4rl:halfcheetah-expert-v{}'.format(version),
                                                             'd4rl:halfcheetah-medium-replay-v{}'.format(version),
                                                             'd4rl:halfcheetah-medium-expert-v{}'.format(version)]
 
